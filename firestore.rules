@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users Collection (Synced securely by backend server with bcrypt and AES-256)
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Audit Logs Collection (Hash-chained audit ledger synced by backend)
+    match /audit_log/{logId} {
+      allow read, write: if true;
+    }
+
+    // Grievances Collection (Citizen inquiries and contact submissions)
+    match /grievances/{grievanceId} {
+      allow read, write: if true;
+    }
+
+    // Approval Requests Collection (Mutation applications and corrections)
+    match /requests/{requestId} {
+      allow read, write: if true;
+    }
+
+    // Default catch-all
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+

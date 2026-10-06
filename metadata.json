@@ -1,0 +1,6 @@
+{
+  "name": "BhoomiSetu",
+  "description": "Integrated GIS-Based Digital Public Infrastructure for Land Governance and Cadastral Clusters across Indian Villages and Growth Hubs.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

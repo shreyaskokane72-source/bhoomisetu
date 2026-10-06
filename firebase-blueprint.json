@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "users": {
+      "title": "Users",
+      "description": "Registered citizen and revenue officer accounts with role, bcrypt hash and encrypted mobile.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["USER", "ADMIN"] },
+        "extendedRole": { "type": "string" },
+        "mobileEncrypted": { "type": "string" },
+        "passwordHash": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "LOCKED"] },
+        "termsConsentTimestamp": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "failedAttempts": { "type": "number" },
+        "lockedUntil": { "type": "number" },
+        "isDemo": { "type": "boolean" }
+      },
+      "required": ["id", "name", "email", "role", "status", "createdAt"]
+    },
+    "audit_log": {
+      "title": "Audit Log",
+      "description": "Cryptographically linked hash-chained audit log for sign-ups, logins, resets, and decisions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user": { "type": "string" },
+        "role": { "type": "string" },
+        "action": { "type": "string" },
+        "entity": { "type": "string" },
+        "entityId": { "type": "string" },
+        "beforeVal": { "type": "string" },
+        "afterVal": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "prevHash": { "type": "string" },
+        "hash": { "type": "string" },
+        "ip": { "type": "string" }
+      },
+      "required": ["id", "user", "role", "action", "timestamp", "prevHash", "hash"]
+    },
+    "grievances": {
+      "title": "Grievances & Contact Submissions",
+      "description": "Citizen inquiries, discrepancies, and feedback visible to administration.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "category": { "type": "string" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "subject", "message", "status", "createdAt"]
+    },
+    "requests": {
+      "title": "Approval Requests",
+      "description": "Cadastral change applications such as heirship mutations and record corrections.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "parcelId": { "type": "string" },
+        "gatNumber": { "type": "string" },
+        "taluka": { "type": "string" },
+        "village": { "type": "string" },
+        "submittedBy": { "type": "string" },
+        "applicantName": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "type", "gatNumber", "submittedBy", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "User accounts synced from backend"
+    },
+    "/audit_log/{logId}": {
+      "schema": "audit_log",
+      "description": "Cryptographically linked audit trail"
+    },
+    "/grievances/{grievanceId}": {
+      "schema": "grievances",
+      "description": "Citizen grievances and inquiries"
+    },
+    "/requests/{requestId}": {
+      "schema": "requests",
+      "description": "Land record mutation and change requests"
+    }
+  }
+}
